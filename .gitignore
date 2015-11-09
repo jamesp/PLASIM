@@ -1,0 +1,15 @@
+.DS_Store
+*.x
+makefile
+bld/
+run/
+
+F90_INTEGER
+F90_REAL
+
+most_info.txt
+most_compiler
+most_compiler_mpi
+most_debug_options
+most_precision_options
+most_last_used.cfg

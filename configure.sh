@@ -77,7 +77,7 @@ done
 if [ $MOST_CC != "NO_CC" ] ; then
    CC_PATH=`which $MOST_CC`
    echo >> most_compiler MOST_CC=$MOST_CC " # " $CC_PATH
-   echo >> most_compiler "MOST_CC_OPTS=-O3"
+   echo >> most_compiler "MOST_CC_OPTS=-O3 -I/opt/X11/include"
    echo "Found C compiler              at: $CC_PATH"
    if [ $MOST_CC = "suncc" ] ; then
       echo >> most_debug_options "MOST_CC_OPTS=-g -C -ftrap=common"
@@ -220,21 +220,11 @@ else
    echo >> most_compiler     LEGFAST=
 fi
 
-#check for Xlib
-  if [ -e "/usr/X11/lib64/libX11.so" ] ; then
-   XLIB_PATH="/usr/X11/lib64"
-elif [ -e "/usr/lib64/libX11.so" ] ; then
-   XLIB_PATH="/usr/lib64"
-elif [ -e "/usr/X11/lib" ] ; then
-   XLIB_PATH="/usr/X11/lib"
-elif [ -e "/usr/lib/X11" ] ; then
-   XLIB_PATH="/usr/lib/X11"
-elif [ -e "/opt/X11" ] ; then
-   XLIB_PATH="/opt/X11"
-fi
+# Hardcoded to use MacOSX /opt/X11 libraries
+XLIB_PATH="/opt/X11/lib"
 if [ -n ${XLIB_PATH} ] ; then
    echo "Found Xlib (X11)              at: $XLIB_PATH"
-   GUILIB="-L$XLIB_PATH -lX11"
+   GUILIB="-L$XLIB_PATH -lX11 -I/opt/X11/include"
 else
    echo "**********************************************"
    echo "* Didn't find Xlib (X11) at standard paths   *"
@@ -242,6 +232,7 @@ else
    echo "**********************************************"
    GUILIB=" -lX11"
 fi
+
 
 echo >> most_compiler     "GUILIB=$GUILIB"
 echo >> most_compiler_mpi "GUILIB=$GUILIB"
